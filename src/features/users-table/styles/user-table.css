@@ -2,6 +2,7 @@
     text-align: center;
     font-size: 2rem;
 }
+
 .users-table {
     border-collapse: collapse;
     margin: 25px auto;
@@ -9,6 +10,9 @@
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid #02a892;
+    border-left: 1px solid #02a892;
+    min-width: 80%;
 }
 
 .users-table thead tr {
