@@ -1,0 +1,39 @@
+.title {
+    text-align: center;
+    font-size: 2rem;
+}
+.users-table {
+    border-collapse: collapse;
+    margin: 25px auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.users-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.users-table th,
+.users-table td {
+    padding: 12px 15px;
+}
+
+.users-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    cursor: pointer;
+}
+
+.users-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+.users-table tbody tr:hover {
+    background-color: #02a892;
+    color: #ffffff;
+}
+.users-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
