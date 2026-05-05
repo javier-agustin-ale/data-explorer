@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { getUsers } from '../services/userService.ts';
+import { IUser } from '../types/IUser.ts';
 import '../styles/user-table.css';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
-import { IUser } from '../../users/types/IUser.ts';
-import { getUsers } from '../../users/services/userService.ts';
 
 interface UserTableProps {
     handleShowDetailsToggle: (userId: number) => void;
@@ -14,15 +14,11 @@ export default function UserTable({ handleShowDetailsToggle }: UserTableProps) {
     useEffect(() => {
         setLoading(true);
         getUsers()
-            .then((users: IUser[]) => {
+            .then((users) => {
                 setUsers(users);
             })
-            .catch((err: unknown) => {
-                if (err instanceof Error) {
-                    console.error(err.message);
-                } else {
-                    console.error(err);
-                }
+            .catch((err) => {
+                console.error(err);
             })
             .finally(() => setLoading(false));
     }, []);

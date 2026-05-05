@@ -1,9 +1,9 @@
-import UserTable from './features/users-table/components/UserTable.tsx';
 import './App.css';
+import PanelContainer from './features/panel-container/components/PanelContainer.tsx';
 function App() {
     return (
         <>
-            <UserTable />
+            <PanelContainer />
         </>
     );
 }
