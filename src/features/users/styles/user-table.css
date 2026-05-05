@@ -1,18 +1,9 @@
-.title {
-    text-align: center;
-    font-size: 2rem;
-}
-
 .users-table {
     border-collapse: collapse;
-    margin: 25px auto;
+    margin: 25px 0 25px 25px;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    border-right: 1px solid #02a892;
-    border-left: 1px solid #02a892;
-    min-width: 80%;
+    width: 100%;
 }
 
 .users-table thead tr {
@@ -38,6 +29,12 @@
     background-color: #02a892;
     color: #ffffff;
 }
+
+.users-table tbody tr.user-selected {
+    background-color: #2d9d8e;
+    color: #ffffff;
+}
+
 .users-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
 }

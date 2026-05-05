@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    gap: 10px;
+}
+
+.panel-left {
+    width: 75%;
+}
+
+.one-panel-only {
+    width: 95%;
+}
+
+.panel-right {
+    width: 25%;
+    margin-left: 30px;
+}
