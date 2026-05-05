@@ -5,11 +5,11 @@ import '../styles/user-table.css';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
 
 interface UserTableProps {
-    handleShowDetailsToggle: (user: IUser) => void;
+    handleShowPostsToggle: (user: IUser) => void;
     userSelected: IUser | null;
 }
 export default function UserTable({
-    handleShowDetailsToggle,
+    handleShowPostsToggle,
     userSelected,
 }: UserTableProps) {
     const [users, setUsers] = useState<IUser[]>([]);
@@ -55,7 +55,7 @@ export default function UserTable({
                     users.map((user) => (
                         <tr
                             key={user.id}
-                            onClick={() => handleShowDetailsToggle(user)}
+                            onClick={() => handleShowPostsToggle(user)}
                             className={
                                 userSelected?.id === user.id
                                     ? 'user-selected'

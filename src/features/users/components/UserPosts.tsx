@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
-import { IPost } from '../types/IPost';
+import { IPost } from '../types/IPost.ts';
 import { getPostsByUserId } from '../services/postService.ts';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
-import { IUser } from '../types/IUser';
-import '../styles/user-details.css';
+import { IUser } from '../types/IUser.ts';
+import '../styles/user-posts.css';
 
-export default function UserDetails({ user }: { user: IUser | null }) {
+interface UserPostsProps {
+    user: IUser | null;
+    closePanel: () => void;
+}
+
+export default function UserPosts({ user, closePanel }: UserPostsProps) {
     const [posts, setPosts] = useState<IPost[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -22,8 +27,11 @@ export default function UserDetails({ user }: { user: IUser | null }) {
         <>
             {loading && <LoadingSpinner showLoading={loading} />}
             {!loading && posts.length ? (
-                <div className="details-container">
-                    <h3>{user?.name}</h3>
+                <div className="posts-container">
+                    <div className="header">
+                        <h3 className="user-name">{user?.name}</h3>
+                        <button onClick={closePanel}>X</button>
+                    </div>
                 </div>
             ) : null}
         </>

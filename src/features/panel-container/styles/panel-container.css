@@ -1,17 +1,44 @@
 .container {
     display: flex;
-    gap: 10px;
+    gap: 16px;
+    height: 100vh;
 }
 
 .panel-left {
-    width: 75%;
+    width: 70%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    overflow: hidden;
 }
 
 .one-panel-only {
-    width: 95%;
+    width: 90%;
+    margin: auto;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    overflow: hidden;
 }
 
 .panel-right {
-    width: 25%;
-    margin-left: 30px;
+    width: 30%;
+    opacity: 0;
+    transform: translateX(40px);
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.panel-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.panel-right.hidden {
+    width: 0;
+    opacity: 0;
+    transform: translateX(40px);
+    pointer-events: none;
 }

@@ -1,0 +1,15 @@
+.posts-container {
+    margin: 25px;
+    border: 1px solid black;
+    min-height: 50vh;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+}
+
+.user-name {
+    margin: auto;
+}
