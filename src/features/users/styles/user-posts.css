@@ -1,15 +1,66 @@
-.posts-container {
-    margin: 25px;
-    border: 1px solid black;
-    min-height: 50vh;
-    max-height: 100vh;
-    overflow-y: auto;
-}
-
-.header {
+.posts-panel {
+    margin-right: 25px;
+    background: #f5f5f5;
+    border: 1px solid #009879;
+    border-radius: 3px;
     display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    height: 600px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.user-name {
-    margin: auto;
+.posts-panel-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid #009879;
+    background: #f9f9f9;
+}
+
+.posts-panel-header-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.posts-panel-header-title i {
+    font-size: 18px;
+    color: #2196f3;
+}
+
+.posts-panel-header-title h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.posts-panel-header-meta {
+    margin: 0;
+    font-size: 13px;
+    color: #666666;
+}
+
+.posts-container {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrollbar styling */
+.posts-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.posts-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.posts-container::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 3px;
+}
+
+.posts-container::-webkit-scrollbar-thumb:hover {
+    background: #999999;
 }

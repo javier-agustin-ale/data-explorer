@@ -2,6 +2,7 @@
     display: flex;
     gap: 16px;
     height: 100vh;
+    margin: auto;
 }
 
 .panel-left {
@@ -13,7 +14,6 @@
 
 .one-panel-only {
     width: 90%;
-    margin: auto;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
     overflow: hidden;
@@ -34,6 +34,7 @@
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
+    margin: 25px auto;
 }
 
 .panel-right.hidden {
