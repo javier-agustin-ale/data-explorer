@@ -26,47 +26,46 @@ export default function UserPosts({ user, closePanel }: UserPostsProps) {
 
     return (
         <>
-            {loading ? (
-                <div
-                    style={{
-                        textAlign: 'center',
-                        padding: '60px 15px',
-                    }}
-                >
-                    <LoadingSpinner showLoading={loading} />
-                </div>
-            ) : null}
-            {!loading && posts.length ? (
-                // <div className="posts-container">
-                //     <div className="header">
-                //         <h3 className="user-name">{user?.name}</h3>
-                //         <button onClick={closePanel}>X</button>
-                //     </div>
-                // </div>
-                <div className="posts-panel">
-                    <div className="posts-panel-header">
-                        <div className="posts-panel-header-title">
-                            <i className="fas fa-file-alt"></i>
-                            <h2>Posts by {user?.name}</h2>
+            <div className="posts-panel">
+                {loading ? (
+                    <div className="loading-posts">
+                        <LoadingSpinner showLoading={loading} />
+                    </div>
+                ) : (
+                    <>
+                        <div className="posts-panel-header">
+                            <div className="posts-panel-header-title">
+                                <h2>Posts by {user?.name}</h2>
+                                <button
+                                    className="close-btn"
+                                    onClick={closePanel}
+                                >
+                                    X
+                                </button>
+                            </div>
+                            <p className="posts-panel-header-meta">
+                                {posts.length} posts
+                            </p>
                         </div>
-                        <p className="posts-panel-header-meta">
-                            {posts.length} posts
-                        </p>
-                    </div>
 
-                    <div className="posts-container">
-                        {posts.map((post, index) => (
-                            <Post
-                                key={post.id}
-                                id={post.id}
-                                postNumber={index + 1}
-                                title={post.title}
-                                body={post.body}
-                            />
-                        ))}
-                    </div>
-                </div>
-            ) : null}
+                        <div className="posts-container">
+                            {posts.length == 0 ? (
+                                <p className="no-posts">
+                                    This user has no posts.
+                                </p>
+                            ) : (
+                                posts.map((post, index) => (
+                                    <Post
+                                        key={post.id}
+                                        post={post}
+                                        postNumber={index + 1}
+                                    />
+                                ))
+                            )}
+                        </div>
+                    </>
+                )}
+            </div>
         </>
     );
 }

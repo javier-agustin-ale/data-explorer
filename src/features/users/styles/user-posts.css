@@ -1,43 +1,62 @@
 .posts-panel {
     margin-right: 25px;
-    background: #f5f5f5;
-    border: 1px solid #009879;
+    background: #3a3a3a;
+    border: 1px solid #016c57;
     border-radius: 3px;
     display: flex;
     flex-direction: column;
     max-width: 500px;
-    height: 600px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 550px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .posts-panel-header {
     padding: 1.25rem;
-    border-bottom: 1px solid #009879;
-    background: #f9f9f9;
+    border-bottom: 1px solid #016c57;
+    background: #424242;
+}
+
+.loading-posts {
+    padding: 50% 0;
+    text-align: center;
 }
 
 .posts-panel-header-title {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     margin-bottom: 3px;
 }
 
-.posts-panel-header-title i {
-    font-size: 18px;
-    color: #2196f3;
+.close-btn {
+    border: 1px solid #016c57;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px
+}
+
+.close-btn:hover {
+    background: #016c57;
+    color: white;
+}
+
+.no-posts {
+    text-align: center;
+    color: white;
+    padding-top: 50%;
 }
 
 .posts-panel-header-title h2 {
     margin: 0;
     font-size: 16px;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #e8e8e8;
 }
 
 .posts-panel-header-meta {
     margin: 0;
     font-size: 13px;
-    color: #666666;
+    color: #b0b0b0;
 }
 
 .posts-container {

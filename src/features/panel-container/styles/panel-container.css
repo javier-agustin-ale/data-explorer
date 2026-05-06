@@ -13,7 +13,7 @@
 }
 
 .one-panel-only {
-    width: 90%;
+    width: 98%;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
     overflow: hidden;

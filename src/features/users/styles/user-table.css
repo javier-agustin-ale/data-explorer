@@ -4,10 +4,11 @@
     font-size: 0.9em;
     font-family: sans-serif;
     width: 100%;
+    height: 550px;
 }
 
 .users-table thead tr {
-    background-color: #009879;
+    background-color: #016c57;
     color: #ffffff;
     text-align: left;
 }
@@ -20,21 +21,24 @@
 .users-table tbody tr {
     border-bottom: 1px solid #dddddd;
     cursor: pointer;
+    color: #fefefe;
 }
-
+.users-table tbody tr:nth-of-type(odd) {
+    background-color: #7c7c7c;
+}
 .users-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #a8a6a6;
 }
 .users-table tbody tr:hover {
-    background-color: #02a892;
+    background-color: #049683;
     color: #ffffff;
 }
 
 .users-table tbody tr.user-selected {
-    background-color: #2d9d8e;
+    background-color: #049683;
     color: #ffffff;
 }
 
 .users-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid #016c57;
 }

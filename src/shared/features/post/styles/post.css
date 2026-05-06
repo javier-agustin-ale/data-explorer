@@ -9,13 +9,13 @@
 }
 
 .post-item:hover {
-    background-color: #fafafa;
+    background-color: #454545;
 }
 
 .post-badge {
     display: inline-block;
-    background: #e3f2fd;
-    color: #1976d2;
+    background: #2563eb;
+    color: #e0e7ff;
     font-size: 11px;
     font-weight: 500;
     padding: 4px 8px;
@@ -23,17 +23,18 @@
     margin-bottom: 8px;
 }
 
+
 .post-title {
     margin: 0 0 8px 0;
     font-size: 14px;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #e8e8e8;
     line-height: 1.5;
 }
 
 .post-body {
     margin: 0;
     font-size: 13px;
-    color: #575353;
+    color: #a8a8a8;
     line-height: 1.6;
 }
