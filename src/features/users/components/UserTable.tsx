@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getUsers } from '../services/userService.ts';
-import { IUser } from '../types/IUser.ts';
+import { IUser } from '../interfaces/IUser.ts';
 import filterUsers from '../utils/filterUsers.ts';
 import '../styles/user-table.css';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
+import { SortDirection } from '../types/SortDirection.ts';
+import { sortData } from '../utils/sortData.ts';
 
 interface UserTableProps {
     handleShowPostsToggle: (user: IUser) => void;
@@ -17,6 +19,10 @@ export default function UserTable({
     const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+    const [sortedColumn, setSortedColumn] = useState<string | null>(null);
+
+    const columnNames: string[] = ['#', 'Name', 'Email', 'User Name', 'Phone'];
 
     useEffect(() => {
         setLoading(true);
@@ -31,17 +37,41 @@ export default function UserTable({
             .finally(() => setLoading(false));
     }, []);
 
-    
     useEffect(() => {
         const data = filterUsers(searchTerm, users);
         setFilteredUsers(data);
     }, [searchTerm, users]);
+
+    useEffect(() => {
+        if (sortedColumn) {
+            const sortedData = sortData(
+                filteredUsers,
+                sortedColumn,
+                sortDirection,
+            );
+            setFilteredUsers(sortedData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sortDirection, sortedColumn]);
 
     const isMatchingField = (fieldValue: string): boolean => {
         if (searchTerm === '') return false;
         return fieldValue
             .toLocaleLowerCase()
             .includes(searchTerm.toLocaleLowerCase());
+    };
+
+    const handleColumnClick = (colName: string) => {
+        if (sortedColumn === colName) {
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortedColumn(colName);
+            setSortDirection('asc');
+        }
+    };
+    const getSortIndicator = (colName: string): string => {
+        if (sortedColumn !== colName) return '';
+        return sortDirection === 'asc' ? ' ▲' : ' ▼';
     };
 
     return (
@@ -68,11 +98,16 @@ export default function UserTable({
                 <table className="users-table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>User Name</th>
-                            <th>Phone</th>
+                            {columnNames.map((colName: string) => (
+                                <th
+                                    key={colName}
+                                    onClick={() => handleColumnClick(colName)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {colName}
+                                    {getSortIndicator(colName)}
+                                </th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody>

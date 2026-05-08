@@ -1,4 +1,4 @@
-import { IUser } from '../types/IUser';
+import { IUser } from '../interfaces/IUser';
 const USERS_URL = 'https://jsonplaceholder.typicode.com/';
 
 export async function getUsers(): Promise<IUser[]> {

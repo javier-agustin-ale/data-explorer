@@ -45,6 +45,10 @@
     border-color: #016c57;
 }
 
+.user-table th {
+    cursor: pointer;
+}
+
 .users-table {
     border-collapse: collapse;
     font-size: 0.9em;
