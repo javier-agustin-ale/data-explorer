@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { getUsers } from '../services/userService.ts';
-import { IUser } from '../types/IUser.ts';
+import { IUser } from '../interfaces/IUser.ts';
+import filterUsers from '../utils/filterUsers.ts';
 import '../styles/user-table.css';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
+import { SortDirection } from '../types/SortDirection.ts';
+import { sortData } from '../utils/sortData.ts';
 
 interface UserTableProps {
     handleShowPostsToggle: (user: IUser) => void;
@@ -13,13 +16,20 @@ export default function UserTable({
     userSelected,
 }: UserTableProps) {
     const [users, setUsers] = useState<IUser[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+    const [sortedColumn, setSortedColumn] = useState<string | null>(null);
+
+    const columnNames: string[] = ['#', 'Name', 'Email', 'User Name', 'Phone'];
 
     useEffect(() => {
         setLoading(true);
         getUsers()
             .then((users: IUser[]) => {
                 setUsers(users);
+                setFilteredUsers(users);
             })
             .catch((err) => {
                 console.error(err);
@@ -27,50 +37,153 @@ export default function UserTable({
             .finally(() => setLoading(false));
     }, []);
 
+    useEffect(() => {
+        const data = filterUsers(searchTerm, users);
+        setFilteredUsers(data);
+    }, [searchTerm, users]);
+
+    useEffect(() => {
+        if (sortedColumn) {
+            const sortedData = sortData(
+                filteredUsers,
+                sortedColumn,
+                sortDirection,
+            );
+            setFilteredUsers(sortedData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sortDirection, sortedColumn]);
+
+    const isMatchingField = (fieldValue: string): boolean => {
+        if (searchTerm === '') return false;
+        return fieldValue
+            .toLocaleLowerCase()
+            .includes(searchTerm.toLocaleLowerCase());
+    };
+
+    const handleColumnClick = (colName: string) => {
+        if (sortedColumn === colName) {
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortedColumn(colName);
+            setSortDirection('asc');
+        }
+    };
+    const getSortIndicator = (colName: string): JSX.Element | null => {
+        if (sortedColumn !== colName) return null;
+        return sortDirection === 'asc' ? (
+            <span className="sort-arrow">▲</span>
+        ) : (
+            <span className="sort-arrow">▼</span>
+        );
+    };
+
     return (
-        <table className="users-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>User Name</th>
-                    <th>Phone</th>
-                </tr>
-            </thead>
-            <tbody>
-                {loading ? (
-                    <tr>
-                        <td
-                            colSpan={5}
-                            style={{
-                                textAlign: 'center',
-                                padding: '60px 15px',
-                            }}
+        <>
+            <div className="user-table-container">
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="search-input"
+                        spellCheck={false}
+                    />
+                    {searchTerm && (
+                        <button
+                            className="search-button"
+                            onClick={() => setSearchTerm('')}
                         >
-                            <LoadingSpinner showLoading={loading} />
-                        </td>
-                    </tr>
-                ) : users.length ? (
-                    users.map((user) => (
-                        <tr
-                            key={user.id}
-                            onClick={() => handleShowPostsToggle(user)}
-                            className={
-                                userSelected?.id === user.id
-                                    ? 'user-selected'
-                                    : ''
-                            }
-                        >
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.username}</td>
-                            <td>{user.phone}</td>
+                            X
+                        </button>
+                    )}
+                </div>
+                <table className="users-table">
+                    <thead>
+                        <tr>
+                            {columnNames.map((colName: string) => (
+                                <th
+                                    key={colName}
+                                    onClick={() => handleColumnClick(colName)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {colName}
+                                    {getSortIndicator(colName)}
+                                </th>
+                            ))}
                         </tr>
-                    ))
-                ) : null}
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        {loading ? (
+                            <tr>
+                                <td colSpan={5} className="no-results">
+                                    <LoadingSpinner showLoading={loading} />
+                                </td>
+                            </tr>
+                        ) : filteredUsers.length ? (
+                            filteredUsers.map((user) => (
+                                <tr
+                                    key={user.id}
+                                    onClick={() => handleShowPostsToggle(user)}
+                                    className={
+                                        userSelected?.id === user.id
+                                            ? 'user-selected'
+                                            : ''
+                                    }
+                                >
+                                    <td>{user.id}</td>
+                                    <td
+                                        className={
+                                            isMatchingField(user.name)
+                                                ? 'highlighted-text'
+                                                : ''
+                                        }
+                                    >
+                                        {user.name}
+                                    </td>
+                                    <td
+                                        className={
+                                            isMatchingField(user.email)
+                                                ? 'highlighted-text'
+                                                : ''
+                                        }
+                                    >
+                                        {user.email}
+                                    </td>
+                                    <td
+                                        className={
+                                            isMatchingField(user.username)
+                                                ? 'highlighted-text'
+                                                : ''
+                                        }
+                                    >
+                                        {user.username}
+                                    </td>
+                                    <td
+                                        className={
+                                            isMatchingField(user.phone)
+                                                ? 'highlighted-text'
+                                                : ''
+                                        }
+                                    >
+                                        {user.phone}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan={5}
+                                    className="no-results highlighted-text"
+                                >
+                                    No users found
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }

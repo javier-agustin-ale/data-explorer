@@ -1,0 +1,1 @@
+export type SortableUserField = 'id' | 'name' | 'email' | 'username' | 'phone';
