@@ -45,6 +45,10 @@
     border-color: #016c57;
 }
 
+.sort-arrow {
+    font-size: 0.8em;
+    margin-left: 10px;
+}
 .user-table th {
     cursor: pointer;
 }

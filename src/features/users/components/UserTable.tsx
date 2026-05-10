@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { getUsers } from '../services/userService.ts';
 import { IUser } from '../interfaces/IUser.ts';
 import filterUsers from '../utils/filterUsers.ts';
@@ -69,9 +69,13 @@ export default function UserTable({
             setSortDirection('asc');
         }
     };
-    const getSortIndicator = (colName: string): string => {
-        if (sortedColumn !== colName) return '';
-        return sortDirection === 'asc' ? ' ▲' : ' ▼';
+    const getSortIndicator = (colName: string): JSX.Element | null => {
+        if (sortedColumn !== colName) return null;
+        return sortDirection === 'asc' ? (
+            <span className="sort-arrow">▲</span>
+        ) : (
+            <span className="sort-arrow">▼</span>
+        );
     };
 
     return (
