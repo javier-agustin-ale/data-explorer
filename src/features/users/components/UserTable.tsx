@@ -22,6 +22,7 @@ export default function UserTable({
     const [loading, setLoading] = useState<boolean>(false);
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
     const [sortedColumn, setSortedColumn] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     const columnNames: string[] = ['#', 'Name', 'Email', 'User Name', 'Phone'];
 
@@ -77,6 +78,10 @@ export default function UserTable({
         ) : (
             <span className="sort-arrow">▼</span>
         );
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
     };
 
     return (
@@ -185,10 +190,10 @@ export default function UserTable({
                     </tbody>
                 </table>
                 <TablePagination
-                    totalPages={10}
-                    currentPage={1}
-                    onPageChange={() => {
-                        console.log('Page Changed!');
+                    totalPages={5}
+                    currentPage={currentPage}
+                    onPageChange={(page: number) => {
+                        handlePageChange(page);
                     }}
                 />
             </div>

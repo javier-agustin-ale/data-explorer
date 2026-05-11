@@ -1,4 +1,33 @@
 .pagination {
     width: 100%;
     background-color: gray;
+    height: 45px;
+display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.pagination-button {
+    font-size: .9em;
+    cursor: pointer;
+    color: #fefefe;
+    background-color: transparent;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+}
+
+.pagination-button:hover {
+    text-decoration: underline ;
+}
+
+.active {
+    background-color: #018167;
 }
