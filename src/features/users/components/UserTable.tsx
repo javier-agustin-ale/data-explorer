@@ -6,6 +6,7 @@ import '../styles/user-table.css';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
 import { SortDirection } from '../types/SortDirection.ts';
 import { sortData } from '../utils/sortData.ts';
+import { TablePagination } from '../../../shared/features/table-pagination/components/TablePagination.tsx';
 
 interface UserTableProps {
     handleShowPostsToggle: (user: IUser) => void;
@@ -183,6 +184,13 @@ export default function UserTable({
                         )}
                     </tbody>
                 </table>
+                <TablePagination
+                    totalPages={10}
+                    currentPage={1}
+                    onPageChange={() => {
+                        console.log('Page Changed!');
+                    }}
+                />
             </div>
         </>
     );
