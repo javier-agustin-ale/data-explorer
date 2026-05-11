@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../styles/panel-container.css';
 import UserTable from '../../users/components/UserTable.tsx';
-import { IUser } from '../../users/types/IUser.ts';
+import { IUser } from '../../users/interfaces/IUser.ts';
 import UserPosts from '../../users/components/UserPosts.tsx';
 
 export default function PanelContainer() {

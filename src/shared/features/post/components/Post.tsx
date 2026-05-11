@@ -1,5 +1,5 @@
-import { IPost } from '../../../../features/users/types/IPost';
 import '../styles/post.css';
+import { IPost } from '../interfaces/IPost';
 
 interface PostProps {
     post: IPost;

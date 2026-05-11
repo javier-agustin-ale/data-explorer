@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { IPost } from '../types/IPost.ts';
+import { IPost } from '../../../shared/features/post/interfaces/IPost.ts';
 import { getPostsByUserId } from '../services/postService.ts';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
-import { IUser } from '../types/IUser.ts';
+import { IUser } from '../interfaces/IUser.ts';
 import '../styles/user-posts.css';
 import Post from '../../../shared/features/post/components/Post.tsx';
 

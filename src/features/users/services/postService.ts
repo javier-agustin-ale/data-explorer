@@ -1,4 +1,5 @@
-import { IPost } from '../types/IPost.ts';
+import { IPost } from '../../../shared/features/post/interfaces/IPost';
+
 const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts/';
 
 export async function getPostsByUserId(userId: number): Promise<IPost[]> {
