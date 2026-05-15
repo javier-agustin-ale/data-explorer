@@ -195,6 +195,9 @@ export default function UserTable({
                     onPageChange={(page: number) => {
                         handlePageChange(page);
                     }}
+                    onRecordsPerPageChange={(recordsPerPage: number) => {
+                        console.log(recordsPerPage);
+                    }}
                 />
             </div>
         </>

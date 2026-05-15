@@ -4,50 +4,71 @@ interface TablePaginationProps {
     totalPages: number;
     currentPage: number;
     onPageChange: (page: number) => void;
+    onRecordsPerPageChange: (recordsPerPage: number) => void;
 }
 export function TablePagination({
     totalPages,
     currentPage,
     onPageChange,
+    onRecordsPerPageChange,
 }: TablePaginationProps) {
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
     return (
         <>
             <div className="pagination">
-                <button
-                    className="pagination-button"
-                    onClick={() =>
-                        currentPage === 1 ? null : onPageChange(currentPage - 1)
-                    }
-                >
-                    &laquo;
-                </button>
-                <div>
-                    {pageNumbers.map((page) => (
-                        <button
-                            className={
-                                page === currentPage
-                                    ? 'pagination-button active'
-                                    : 'pagination-button'
-                            }
-                            key={page}
-                            onClick={() => onPageChange(page)}
-                        >
-                            {page}
-                        </button>
-                    ))}
+                <div className="pagination-controls">
+                    <button
+                        className="pagination-button"
+                        onClick={() =>
+                            currentPage === 1
+                                ? null
+                                : onPageChange(currentPage - 1)
+                        }
+                    >
+                        &laquo;
+                    </button>
+                    <div className="page-numbers">
+                        {pageNumbers.map((page) => (
+                            <button
+                                className={
+                                    page === currentPage
+                                        ? 'pagination-button active'
+                                        : 'pagination-button'
+                                }
+                                key={page}
+                                onClick={() => onPageChange(page)}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </div>
+                    <button
+                        className="pagination-button"
+                        onClick={() =>
+                            currentPage < totalPages
+                                ? onPageChange(currentPage + 1)
+                                : null
+                        }
+                    >
+                        &raquo;
+                    </button>
                 </div>
-                <button
-                    className="pagination-button"
-                    onClick={() =>
-                        currentPage < totalPages
-                            ? onPageChange(currentPage + 1)
-                            : null
-                    }
-                >
-                    &raquo;
-                </button>
+                <div className="total-records">
+                    <span className="items-label">Items per page:</span>
+                    <select
+                        className="options"
+                        id="total-records"
+                        onChange={(e) =>
+                            onRecordsPerPageChange(Number(e.target.value))
+                        }
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                    </select>
+                </div>
             </div>
         </>
     );
