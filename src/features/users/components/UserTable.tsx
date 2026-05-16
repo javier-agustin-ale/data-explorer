@@ -6,6 +6,7 @@ import '../styles/user-table.css';
 import LoadingSpinner from '../../../shared/features/loading-spinner/components/LoadingSpinner.tsx';
 import { SortDirection } from '../types/SortDirection.ts';
 import { sortData } from '../utils/sortData.ts';
+import { TablePagination } from '../../../shared/features/table-pagination/components/TablePagination.tsx';
 
 interface UserTableProps {
     handleShowPostsToggle: (user: IUser) => void;
@@ -21,6 +22,9 @@ export default function UserTable({
     const [loading, setLoading] = useState<boolean>(false);
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
     const [sortedColumn, setSortedColumn] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+
+    const [itemsPerPage, setItemsPerPage] = useState<number>(5);
 
     const columnNames: string[] = ['#', 'Name', 'Email', 'User Name', 'Phone'];
 
@@ -39,6 +43,7 @@ export default function UserTable({
 
     useEffect(() => {
         const data = filterUsers(searchTerm, users);
+        setCurrentPage(1);
         setFilteredUsers(data);
     }, [searchTerm, users]);
 
@@ -61,7 +66,7 @@ export default function UserTable({
             .includes(searchTerm.toLocaleLowerCase());
     };
 
-    const handleColumnClick = (colName: string) => {
+    const handleColumnClick = (colName: string): void => {
         if (sortedColumn === colName) {
             setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
         } else {
@@ -77,6 +82,24 @@ export default function UserTable({
             <span className="sort-arrow">▼</span>
         );
     };
+
+    const handlePageChange = (page: number): void => {
+        setCurrentPage(page);
+    };
+
+    const handleRecordsPerPageChange = (recordsPerPage: number): void => {
+        setItemsPerPage(recordsPerPage);
+        setCurrentPage(1);
+    };
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredUsers.length / itemsPerPage),
+    );
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
     return (
         <>
@@ -121,8 +144,8 @@ export default function UserTable({
                                     <LoadingSpinner showLoading={loading} />
                                 </td>
                             </tr>
-                        ) : filteredUsers.length ? (
-                            filteredUsers.map((user) => (
+                        ) : paginatedUsers.length ? (
+                            paginatedUsers.map((user) => (
                                 <tr
                                     key={user.id}
                                     onClick={() => handleShowPostsToggle(user)}
@@ -183,6 +206,14 @@ export default function UserTable({
                         )}
                     </tbody>
                 </table>
+                <TablePagination
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    onPageChange={(page: number) => {
+                        handlePageChange(page);
+                    }}
+                    onRecordsPerPageChange={handleRecordsPerPageChange}
+                />
             </div>
         </>
     );

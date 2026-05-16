@@ -1,0 +1,75 @@
+.pagination {
+    width: 100%;
+    background-color: gray;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+ 
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+}
+ 
+.page-numbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+ 
+.total-records {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+    margin-left: auto;
+}
+ 
+.total-records p {
+    margin: 0;
+    color: #fefefe;
+    font-size: 0.9em;
+}
+ 
+.pagination-button {
+    font-size: .9em;
+    cursor: pointer;
+    color: #fefefe;
+    background-color: transparent;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+}
+ 
+.pagination-button:hover {
+    text-decoration: underline ;
+}
+ 
+.pagination-button.active {
+    background-color: #018167;
+}
+
+.items-label{
+    font-size: .8em;
+    color: #fefefe;
+    margin-right: 5px;
+    padding-bottom: 3px;
+}
+
+.options{
+    text-align: center;
+    background: transparent;
+    padding: 5px;
+    color: #fefefe;
+    border: none;
+    border-bottom: 1px solid #dddcdc;
+    cursor: pointer;
+}
+
