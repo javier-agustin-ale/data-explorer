@@ -13,6 +13,7 @@ export function TablePagination({
     onRecordsPerPageChange,
 }: TablePaginationProps) {
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const recordsPerPageOptions = [5, 10, 15, 20];
 
     return (
         <>
@@ -59,14 +60,16 @@ export function TablePagination({
                     <select
                         className="options"
                         id="total-records"
+                        defaultValue={5}
                         onChange={(e) =>
                             onRecordsPerPageChange(Number(e.target.value))
                         }
                     >
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                        <option value={50}>50</option>
+                        {recordsPerPageOptions.map((option) => (
+                            <option key={option} value={option}>
+                                {option}
+                            </option>
+                        ))}
                     </select>
                 </div>
             </div>

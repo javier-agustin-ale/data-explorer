@@ -24,6 +24,8 @@ export default function UserTable({
     const [sortedColumn, setSortedColumn] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
 
+    const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+
     const columnNames: string[] = ['#', 'Name', 'Email', 'User Name', 'Phone'];
 
     useEffect(() => {
@@ -41,6 +43,7 @@ export default function UserTable({
 
     useEffect(() => {
         const data = filterUsers(searchTerm, users);
+        setCurrentPage(1);
         setFilteredUsers(data);
     }, [searchTerm, users]);
 
@@ -63,7 +66,7 @@ export default function UserTable({
             .includes(searchTerm.toLocaleLowerCase());
     };
 
-    const handleColumnClick = (colName: string) => {
+    const handleColumnClick = (colName: string): void => {
         if (sortedColumn === colName) {
             setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
         } else {
@@ -80,9 +83,23 @@ export default function UserTable({
         );
     };
 
-    const handlePageChange = (page: number) => {
+    const handlePageChange = (page: number): void => {
         setCurrentPage(page);
     };
+
+    const handleRecordsPerPageChange = (recordsPerPage: number): void => {
+        setItemsPerPage(recordsPerPage);
+        setCurrentPage(1);
+    };
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredUsers.length / itemsPerPage),
+    );
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
     return (
         <>
@@ -127,8 +144,8 @@ export default function UserTable({
                                     <LoadingSpinner showLoading={loading} />
                                 </td>
                             </tr>
-                        ) : filteredUsers.length ? (
-                            filteredUsers.map((user) => (
+                        ) : paginatedUsers.length ? (
+                            paginatedUsers.map((user) => (
                                 <tr
                                     key={user.id}
                                     onClick={() => handleShowPostsToggle(user)}
@@ -190,14 +207,12 @@ export default function UserTable({
                     </tbody>
                 </table>
                 <TablePagination
-                    totalPages={5}
+                    totalPages={totalPages}
                     currentPage={currentPage}
                     onPageChange={(page: number) => {
                         handlePageChange(page);
                     }}
-                    onRecordsPerPageChange={(recordsPerPage: number) => {
-                        console.log(recordsPerPage);
-                    }}
+                    onRecordsPerPageChange={handleRecordsPerPageChange}
                 />
             </div>
         </>
