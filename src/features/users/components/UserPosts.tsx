@@ -49,7 +49,7 @@ export default function UserPosts({ user, closePanel }: UserPostsProps) {
                         </div>
 
                         <div className="posts-container">
-                            {posts.length == 0 ? (
+                            {posts.length === 0 ? (
                                 <p className="no-posts">
                                     This user has no posts.
                                 </p>
