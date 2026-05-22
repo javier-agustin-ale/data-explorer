@@ -5,6 +5,8 @@ import LoadingSpinner from '../../../shared/features/loading-spinner/components/
 import { IUser } from '../interfaces/IUser.ts';
 import '../styles/user-posts.css';
 import Post from '../../../shared/features/post/components/Post.tsx';
+import NotificationToast from '../../../shared/features/notification-toast/components/NotificationToast.tsx';
+import { error } from 'console';
 
 interface UserPostsProps {
     user: IUser | null;
@@ -14,18 +16,32 @@ interface UserPostsProps {
 export default function UserPosts({ user, closePanel }: UserPostsProps) {
     const [posts, setPosts] = useState<IPost[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [showNotification, setShowNotification] = useState(false);
 
     useEffect(() => {
         if (!user) return;
         setLoading(true);
+        setPosts([]);
         getPostsByUserId(user.id)
             .then((res: IPost[]) => setPosts(res))
-            .catch((err) => console.log(err))
-            .finally(() => setLoading(false));
+            .catch((err) => {
+                setShowNotification(true);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }, [user]);
 
     return (
         <>
+        { showNotification && (
+            <NotificationToast
+                type="error"
+                message={'error al cargar posts'}
+                autoClose={5000}
+                onClose={() => setShowNotification(false)}
+            />
+)}
             <div className="posts-panel">
                 {loading ? (
                     <div className="loading-posts">
