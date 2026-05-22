@@ -3,6 +3,7 @@
     gap: 16px;
     height: 100vh;
     margin: auto;
+    background-color: #676c71;
 }
 
 .panel-left {
@@ -34,7 +35,7 @@
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
-    margin: 25px auto;
+    margin: 15px auto;
 }
 
 .panel-right.hidden {
